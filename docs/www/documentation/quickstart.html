@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+ "http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML>
+	<HEAD>
+		<LINK
+		 REL="Stylesheet"
+		 TITLE="Default Stylesheet"
+		 MEDIA="Screen"
+		 HREF="docs.css"
+		>
+		<TITLE>The PyUI2 Project - Quickstart</TITLE>
+	</HEAD>
+
+	<BODY>
+		<div id="content">
+		<p><h1>Quickstart</h1></p>
+		<h4>Copyright 2005 John Judd</h4>
+		
+		<p><h3>Hello World</h3></p>
+		As is usual with introductory programs since time immemorial, we will introduce you to PyUI2 with the ubiquitous Hello World program. This one will open a Pygame window and display a frame with a simple widget.<br>
+		<div id="code"><pre>
+import pyui2
+
+pyui2.init(400, 300, "2d", 0, "Cliched first program")
+frame = pyui2.widgets.Frame(50, 50, 300, 200, "Say it")
+label = pyui2.widgets.Label("Hello World!")
+frame.addChild(label)
+
+pyui2.run()
+		</pre></div>
+
+		Now, let's break this simple program down.
+
+		<div id="code"><pre>
+pyui2.init(400, 300, "2d", 0, "Cliched first program")
+		</pre></div>
+
+		The init function is responsible for starting PyUI2. It initialises the renderer, and loads a default theme.  Here you can see that we are creating a window that is 400 wide by 300 high which has the title "Cliched first program." The "2d" parameter tells PyUI2 to select the 2D renderer, which in this case is the Pygame2D renderer. The fourth parameter tells the renderer to go into fullscreen mode if it is set to 1. In this case we're happy with windowed mode, so we'll set it to 0. The fullscreen and title parameters are optional here. If you don't include them, PyUI2 will open in windowed mode, and the window will have no title.
+
+		<div id="code"><pre>
+frame = pyui2.widgets.Frame(50, 50, 300, 200, "Say it")
+		</pre></div>
+
+		We have a main window, but alone, that's not much good to us. We need to create a window to put some widgets on, so we'll create a frame. It's pretty simple really, we just specify the position and extents within the main window, and give it a title. The example will give us a frame positioned at 50, 50 with a width and height of 300 by 200.
+
+		<div id="code"><pre>
+label = pyui2.widgets.Label("Hello World!")
+frame.addChild(label)
+		</pre></div>
+
+		It's time to add a widget to our frame. In this case, we'll use a Label with the text "Hello World!" and then add it to the frame using the addChild member function.
+
+		<div id="code"><pre>
+pyui2.run()
+		</pre></div>
+
+		Now let's call the PyUI2 run function. This function will process the main loop until PyUI2 receives an event telling it to quit. You initiate a quit event in windowed applications simply by clicking the close button on the main windows title bar. For fullscreen applications however, you'll have to implement another way of telling the system to quit since you won't have the main window close button to click on.
+
+
+		</div>
+
+	</BODY>
+</HTML>
+
+
+

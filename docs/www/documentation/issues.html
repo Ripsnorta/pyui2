@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+ "http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML>
+	<HEAD>
+		<LINK
+		 REL="Stylesheet"
+		 TITLE="Default Stylesheet"
+		 MEDIA="Screen"
+		 HREF="docs.css"
+		>
+		<TITLE>The PyUI2 Project - Known Issues</TITLE>
+	</HEAD>
+
+	<BODY>
+		<div id="content">
+		<p><h1>Known Issues</h1></p>
+		<h4>Copyright 2005 John Judd</h4>
+		
+		This section describes the known issues relating to the current version of PyUI2. Assistance or contributions in solving these problems would be greatly appreciated. If you find any significant problems with a release, please let me know so I can add them here.
+
+		<p><h3>Release 0.2</h3></p>
+
+		<table width=90% border=1 align="center">
+            <tr>
+                <td width=75%><B>Issue</B></td>
+                <td width=7% align="center"><B>Platform</B></td>
+                <td width=7% align="center"><B>Status</B></td>
+            </tr>
+            <tr>
+                <td><I>GLUT not responding to user inputs.</I><br>The standard GLUT event handling callbacks are not being called when the user performs some action like clicking on the window.</td>
+                <td align=center>All</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><I>OpenGL clipping problems.</I><br>When using the OpenGL graphics context, sections of the GUI do not draw until some user input occurs. These areas don't seem to correspond to a particular widget, except for the menus which seem to almost entirely black out. This appears to be an issue with clipping. Apparently the original PyUI had problems with clipping as well.</td>
+                <td align=center>Win</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><I>OpenGL not rendering.</I><br>When using OpenGL nothing is being displayed on the screen. Switching to Pygame 2D drawing works well. This is possibly the same problem as described in OpenGL clipping problems.</td>
+                <td align=center>Mac</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><I>System mouse not being disabled.</I><br>Pygame does not seem to disable the system mouse cursor on the Mac as it does with Windows. The PyUI2 cursor is displayed as well as the system cursor.</td>
+                <td align=center>Mac</td>
+                <td></td>
+            </tr>
+        </table>
+
+		</div>
+
+	</BODY>
+</HTML>
+
+
+

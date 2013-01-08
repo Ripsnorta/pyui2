@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+ "http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML>
+	<HEAD>
+		<LINK
+		 REL="Stylesheet"
+		 TITLE="Default Stylesheet"
+		 MEDIA="Screen"
+		 HREF="docs.css"
+		>
+		<TITLE>The PyUI2 Project - Introduction</TITLE>
+	</HEAD>
+
+	<BODY>
+		<div id="content">
+		<p><h1>Introduction</h1></p>
+		<h4>Copyright 2005 John Judd</h4>
+		
+		PyUI2 is a cross platform user interface library written in Python. It is targeted primarily for game development, but can be used to develop robust user interfaces for other applications. It uses the concept of themes to provide the ability to modify the look and feel of the application, and the concept of devices and graphics contexts allow the use of different systems to generate the GUI graphics and handle interaction with the user.<br>
+
+        <p>Unlike other Python GUIs, PyUI2 is written entirely in Python. There is no C/C++ source code specific to PyUI2 to compile for a particular platform in order to get PyUI2 to work. It's simply a matter of copying PyUI2 to the site-packages directory of your Python installation, and making sure that the libraries that PyUI2 depends on also exist.</p>
+		<p><h3>Installation</h3></p>
+		As mentioned above PyUI2 is extremely simple to install. In your Python installation, locate the site-packages directory. On Windows this is usually the path: 
+		<div id="code"><pre>
+C:\Python24\Lib\site-packages
+		</pre></div>
+        <p>Now just unzip the PyUI2 release that you have downloaded into site-packages, and voila! You are almost ready to go.</p>
+
+        <p>The next step is to install the libraries that PyUI2 is dependant on, if they are not already installed.  The two libraries that PyUI2 depends on are Pygame and PyOpenGL. There are located at www.pygame.org and pyopengl.sourceforge.net respectively, and will also be installed into the site-packages directory.</p>
+
+        <p>If you are only planning on using the Pygame 2D device, there is no need to download PyOpenGL, otherwise download and install both libraries. Follow their instructions for installation, and there you have it, you can start writing PyUI2 based games and applications.</p>
+		</div>
+
+	</BODY>
+</HTML>
+
+
+

@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+ "http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML>
+	<HEAD>
+		<LINK
+		 REL="Stylesheet"
+		 TITLE="Default Stylesheet"
+		 MEDIA="Screen"
+		 HREF="docs.css"
+		>
+		<TITLE>The PyUI2 Project - Basics</TITLE>
+	</HEAD>
+
+	<BODY>
+		<div id="content">
+		<p><h1>PyUI2 Basics</h1></p>
+		<h4>Copyright 2005 John Judd</h4>
+		
+		<p><h3>The Desktop</h3></p>
+		The Desktop is container for all PyUI2 windows. It manages window lifetime, processes events from the system devices, presents the collection of windows to the rendering system, along with other essential functions.
+
+		<p><h3>Windows, Frames, and Panels</h3></p>
+		<p>A Window is a low level object that is contained in the desktop. It provides a unique handle to the rendering system to allow the redrawing of only what has changed since the last drawing update. On each drawing update the desktop iterates through the active windows and presents them to the rendering system which updates the windows graphics if something has changed, and then draws the visible part of the window on the desktop.</p>
+
+        <p>Frames are the high level windowing object, derived from the Window class, that provide the complete windowing functionality. If desired they can have Caption Bars with titles, close, minimise and maximise buttons, frame borders, and the ability to be resized. A frame has a default panel which contains the user defined widgets, and which can be replaced with other panel types like the tabbed panel, or the splitter panel.</p>
+
+        <p>Panels are widgets that are used as containers for user defined widgets. Aside from the default panel used by a Frame, there are several classes derived from the panel class that provide extra functionality such as a split or tabbed view.</p>
+
+		<p><h3>Layout Managers</h3></p>
+		Layout Managers determine how the widgets in a panel are layed out. The default layout manager used by the panel is the flow layout manager. The other layout managers allow for laying the widgets out in a grid, at table positions, at absolute positions, or at the borders of the panel.
+
+		<p><h3>Widgets</h3></p>
+		Widgets are the GUI controls that provide functionality to a particular panel or frame. They are usually interactive allowing the user to change their state in some way, but some, like the label widget, are static. Some widgets such as the grid provide the functionality to contain other widgets.
+
+		<p><h3>Dialogs</h3></p>
+		Dialogs are derived from Frames to provide the common functionality often provided by GUI systems for file access, color choosing, and for games, a console view. It is possible to specify that a dialog will be modal in order to prevent other GUI interaction taking place before the dialog is closed.
+		<p><h3>Themes</h3></p>
+		<p>As PyUI2 is targeted primarily at game development, it is necessary for the game developer to change the way the user interface looks and feels. It wouldn't do to have all games using PyUI2 look exactly the same. Themes are the way that PyUI2 allows the developer to do this. By using and modifying theme properties in a derived theme, the developer can easily specify the colors, brushes, and pens that they want to use to render their user interface. If it becomes necessary for a deeper change to how a widget is drawn, then it is easy to change the code for just that widget.</p>
+
+		<p><h3>Devices</h3></p>
+		<p>A device is a system level object that provides the interface to the underlying system, but not to the underlying graphics system. The interface to the graphics system is provided by a Graphics Context. A device is accessed through a device context object and handles all the event processing, image loading, and other functionality not directly involved in rendering images to the screen. There are two devices available for use, there is a Pygame device and a GLUT device. The Pygame device handles both Pygame 2D graphics and OpenGL graphics, while the GLUT device only allows the use of OpenGL graphics.</p>
+
+        <p><i>Please note that as of release 0.2, the GLUT device does not process events as it should. I am currently stymied.</i></p>
+
+		<p><h3>Graphics Contexts</h3></p>
+		<p>Where the device handles all the non-graphical functionality of the underlying system, a graphics context handles all of the graphical functionality of a graphics device as well as providing a object oriented graphics API to PyUI2. All the basic rendering functionality provided by Pygame or OpenGL is provided in the Pygame graphics and OpenGL graphics devices respectively and the Graphics Context provides an interface to this functionality.</p>
+        <p>The Graphics Context also provides classes and functions to create brushes, pens, fonts, and various shapes to be used for drawing the widgets. This will allow the developer to specify these objects in the theme properties for a widget to change how the widget appears. For example, a button could be changed from a rectangle to a circle by specifying the circle grob (graphical object), or the background of the frame could be changed from plain to patterned by specifying a pattern brush rather than a solid color.</p>
+
+        <p><i>Please note that as of release 0.2 not all this functionality is available. Some of it has been done, but there is still much to do.</i></p>
+
+		<p><h3>Developer Defined</h3></p>
+        <p>The ability of the developer to display her own content is fairly crucial in a game, and PyUI2 provides her with the functionality to do just that. Before the presenter processes all the active windows, it checks for the presence of a user defined background drawing function. If this function exists, it is called and any drawing or processing is executed. If there is no background drawing function specified, the background is simply cleared each frame.</p>
+        <p>Along with the background drawing function, the developer can pass a callback function to the run function which is called each time the main loop is iterated.</p>
+        <p>PyUI2 also allows the developer to create timed callbacks which are called when the specified period has elapsed.
+
+        <br><br>
+		</div>
+
+	</BODY>
+</HTML>
+
+
+

@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+ "http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML>
+	<HEAD>
+		<LINK
+		 REL="Stylesheet"
+		 TITLE="Default Stylesheet"
+		 MEDIA="Screen"
+		 HREF="docs.css"
+		>
+		<TITLE>The PyUI2 Project - Getting Started</TITLE>
+	</HEAD>
+
+	<BODY>
+		<div id="content">
+		<p><h1>Getting Started</h1></p>
+		<h4>Copyright 2005 John Judd</h4>
+		
+		<p><h3>Initialising PyUI2</h3></p>
+		<p>The first thing to do when creating a PyUI2 application is to initialise PyUI2. This also has the effect of initialising the underlying rendering system so there will be no need to do any initialisation for that unless there is an application specific need to do so. Initialising PyUI2 is simplicity itself. All you need to do is to import pyui2 and call the following function as so:</p>
+		<div id="code"><pre>
+
+import pyui2
+
+pyui2.init(width, height, device, fullscreen, title)
+		</pre></div>
+
+        <p>The width and height parameters are required, and will set the width and height of the parent window. The title parameter is a string that will supply a title to that window. The fullscreen flag is set to 0 as default, and if set to 1 will open the window in fullscreen mode. In fullscreen mode there will be no title bar with a close button on the window, so be sure you have a way to close the application.</p>
+
+        <p>The device parameter is a string that specifies the device and graphics context that you want the application to use. The currently available device parameters are:</p>
+
+		<div id="code"><pre>
+
+<b>2d</b>  - Creates a Pygame device and uses Pygame graphics for the graphics.
+<b>p3d</b> - Creates a Pygame device and uses OpenGL for graphics.
+<b>gl</b>  - Create a GLUT device and uses OpenGL for graphics.
+		</pre></div>
+
+		<p><h3>Selecting a Theme</h3></p>
+        <p>The next step is to select the theme that you want to use for displaying the user interface. Normally you would create and use your own theme to ensure that the look and feel of your game is unique. (See the Managing Themes section for details on how to do this.) For the purpose of this example we'll use one of the themes that comes standard with PyUI2. You'll need to import the theme from PyUI2s themes package, create an instance of it, and pass that instance to the desktop objects setTheme function. In this example we are using the ComicTheme, but there is also a couple of Windows themes and a Mac Theme available.
+
+		<div id="code"><pre>
+
+from pyui2.themes import ComicTheme
+
+theTheme = ComicTheme()
+pyui2.desktop.setTheme(theTheme)
+		</pre></div>
+
+        <p>If no theme is specified at this stage, the standard PyUI2 theme is used. If you want to change a theme while the application is running it is quite simple to do so. Simply call the setTheme function with an instance of the desired theme and the next time the GUI is rendered, the new theme will be used to do the drawing.</p>
+
+		<p><h3>Setting the Background Function</h3></p>
+        PyUI2 will only manage and draw it's own objects on the display. In order for the game to display any of its own content, it is necessary to specify a background drawing function which handles the game content. You can do this by calling the desktop setBackgroundDrawingFunction as follows:
+
+		<div id="code"><pre>
+from pyui2.desktop import getPresenter
+
+def gameDrawingFunction():
+    getPresenter().getDeviceContext().clearScreen()
+
+...
+pyui2.desktop.setBackgroundDrawingFunction(gameDrawingFunction)
+		</pre></div>
+
+        One thing you should make sure is that the background drawing function erases the view before it does any drawing of it's own rendering. If you do not specify a background drawing function, PyUI2 clears the view before it draws the GUI. However, when a background drawing function is specified, PyUI2 defers to that function to do all background drawing and doesn't clear the view first. In the example we get the device context from the presenter object. We can then use the device context to clear the screen.
+
+		<p><h3>Adding a Frame and Widgets</h3></p>
+        
+        Now we define the GUI elements that we want the user to interact with. A frame is derived from a Window class and provides the functionality for managing groups of widgets on the desktop. It's pretty simple to create a frame, the code below shows how.
+
+		<div id="code"><pre>
+
+frame = pyui2.widgets.Frame(0, 0, 300, 100, "A Simple Frame")
+		</pre></div>
+
+        <p>That's all there is to it. The example creates a frame at the top left of the desktop with a width of 300 and a height of 100, and a title of "A Simple Frame." The Frame will have a caption bar which displays the title and a close button. Left clicking on the caption bar and holding the button down while you move the mouse will drag the frame around the desktop.</p>
+
+        <p>However, you probably won't want all the frames in your game to have captions, and there will certainly be some that you don't want to move or resize. You can add a sixth parameter for the flags you want to pass to the frame. All you do is add each required flag to a list and pass the list into the frames constructor.
+
+		<div id="code"><pre>
+
+flags = (pyui2.widgets.Frame.NO_CAPTION, pyui2.widgets.Frame.NO_RESIZE)
+frame = pyui2.widgets.Frame(0, 0, 300, 100, "A Simple Frame", flags)
+		</pre></div>
+
+        <p>Adding a widget to the frame is also fairly simple. All you need to do is create the widget in the same fashion as you created the frame, and then call the frames addChild function. The parameters you provide the addChild function depend on the layout you select, but for the purpose of this example we'll use the default flow layout. See the Using Layouts section for more information on layouts.</p>
+
+        <p>Lets add a button and a button handler</p>
+
+		<div id="code"><pre>
+
+    ...
+    closeButton = pyui2.widgets.Button("Close", self.onClose)
+    frame.addChild(closeButton)
+    frame.pack()
+
+def onClose(arg):
+    print "Close button pressed"
+		</pre></div>
+
+        <p>Now, when you run the program, you'll see A Simple Frame open with a single button labeled "Close" on the desktop. If you click on the close button, "Close button pressed" will display on the command prompt or terminal window.</p>
+
+        <p>But, we don't really want the frame to open in the top left of the desktop. It would be preferable if it opened, centered in the screen. To do this we can call the following function.</p>
+
+		<div id="code"><pre>
+
+frame.centerInDesktop()
+		</pre></div>
+
+
+		<p><h3>Being a Quitter</h3></p>
+        <p>At some point we'll have to tell PyUI2 to stop running and clean up. In windowed mode, this is very simple. Just click the close button on the main window. PyUI2 gets this event and automatically handles it. However, it's often good to provide an alternative method for quitting the application, especially if it's running in fullscreen mode and doesn't have a close button to quit with. As is usually the case with PyUI2, this is very easy to do. We can just use the quit function. In this cxample, we'll add it to the close button handler as follows.</p>
+
+		<div id="code"><pre>
+
+def onClose(arg):
+    print "Close button pressed"
+    pyui2.quit()
+		</pre></div>
+
+        <p>Now, when the close button is pressed, the quit function is called and tells PyUI2 that it is time to clean up and stop running. Now you can run in fullscreen mode safely.</p>
+
+		<p><h3>Running PyUI2</h3></p>
+        <p>Now that the hard work has now been done. All that is left is to start PyUI2 by telling it to process the main loop. This loop handles events and presents the active windows to the current graphics context for drawing. For this we use the run function.</p>
+		<div id="code"><pre>
+
+pyui2.run()
+		</pre></div>
+
+        <p>And that's all there is to it. You now have a very simple, not very functional, but complete PyUI2 application. All you have to do now is write your game using what you've learned here. For more examples have a look at the demo applications that come along with the PyUI2 library. Don't forget, if you need help, to post on the PyUI2 forums or mailing list.</p>
+
+		<p><h3>The Complete Program</h3></p>
+
+		<div id="code"><pre>
+
+import pyui2
+from pyui2.themes import ComicTheme
+from pyui2.desktop import getPresenter
+   
+
+def onClose(arg):
+    print "Close button pressed"
+    pyui2.quit()
+
+
+def gameDrawingFunction():
+    # Do some drawing after clearing the screen
+    getPresenter().getDeviceContext().clearScreen()
+
+
+pyui2.init(400, 400, "2d", 0, "Getting Started")
+theTheme = ComicTheme()
+pyui2.desktop.setTheme(theTheme)
+
+pyui2.desktop.setBackgroundDrawingFunction(gameDrawingFunction)
+
+flags = (pyui2.widgets.Frame.NO_CAPTION, pyui2.widgets.Frame.NO_RESIZE)
+frame = pyui2.widgets.Frame(0, 0, 300, 100, "A Simple Frame", flags)
+closeButton = pyui2.widgets.Button("Close", self.onClose)
+frame.addChild(closeButton)
+frame.pack()
+frame.centerInDesktop()
+
+pyui2.run()
+		</pre></div>
+<br><br>
+	</BODY>
+</HTML>
+
+
+

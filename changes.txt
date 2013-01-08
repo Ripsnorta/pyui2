@@ -1,0 +1,120 @@
+Changes for PyUI2 since PyUI 1.0 Release
+
+
+Version 0.2.1
+General
+* Added the toolbar widget in the file toolbar.py, currently not complete.
+
+In desktop.py
+* Fixed typo in quit method.
+
+In window.py
+* In the setDirty method, removed self.dirty = 1 which was resulting in the method always exiting before doing anything.
+
+In system/pygamedevice.py
+* The openglgraphics is now being imported when OGL Mode is specified to fix a crash when PyOpenGL is not installed and developer only wants to use Pygame graphics (or other.)
+
+In themes/presenter.py
+* Made changes to the present method to conform to pythonic style.
+
+In test/themesetup.py
+* Typo getThemer changed to getTheme
+
+
+Version 0.2
+
+General
+* In Themes added __all__ and imports for the all available themes to allow for easier importing.
+* Added some test applications.
+* Added ThemeSwitcher demo application
+* The GreenTheme has been deprecated. It still there but highly incomplete, best not to use at all.
+* Fixed issue with the caption bar not resizing when the frame was resized.
+* Major rewrite of the way themes are handled to make it easier to create new themes and to remove redundancy. This is a Work In Progress. 
+* Added IDs to widgets. These are strings. The widget creator can choose to set the ID, or the ID will be automatically created based on the widget type.
+* Extracted Window and Panel from base.py into their own files named window.py and panel.py. Made changes to widgets and other code to accomodate the change.
+* Created a new package called system. This effectively replaces the renderers package.
+  - Added file __init__.py.
+  - Added file dcx.py.
+  - Added file gcx.py.
+  - Added file pygamedevice.py.
+  - Added file pygamegraphics.py.
+  - Added file openglgrapghics.py.
+  - Added file glutdevice.py.
+
+In file renderers\pygame2D.py
+* Fixed bug where the text was always rendered in the default font regardless of which font was passed to the renderers drawText method.
+* Looked into why creating fonts always seemed to fail. Turns out that the PyGame font object wants a full path, not just a fontname. Changed to just use SysFont for now.
+
+In file frame.py
+* Several classes, FrameMenu, FrameMenuItem, and FrameMenuBar were defined but are never used. These have been removed as they are simply duplicating the standard menu functionality. The reference in viewwindow.py was also removed.
+
+In file core.py
+* The default startup theme has been changed from the Future theme to the base Theme.
+
+In file renderBase.py
+* If a callback was specified for the run function, desktop drawing and updating would never be done. This has been fixed.
+
+
+
+
+Version 0.1 - Released May 8th, 2005
+
+General
+* Extracted classes from widgets.py into individual files named for each class under a widgets subdirectory/package. 
+* Extracted classes from layouts.py into individual files named for each class under a layouts subdirectory/package. 
+* Extracted classes from dialogs.py into individual files named for each class under a dialogs subdirectory/package. 
+* Moved other widgets into the widgets directory.
+* Added OSXTheme in themes/osx.py. This is a copy of themes/win2k.py.
+* Added WinXPTheme in themes/winxp.py. This is a copy of themes/win2k.py.
+* Added flags when creating frames.
+  - NO_CAPTION stops the frame from displaying a caption bar.
+  - NO_RESIZE creates a fixed size frame without a resizing area.
+  - TOPMOST replaces the topmost parameter passed to the Frame constructor.
+
+* Added CaptionBar widget in widgets/captionbar.py
+* Removed Escape 'special event handler' from handleEvent in desktop.py
+* Modified the update method in pygame2D.py and openglPygame.py to post a pyui2.locals.QUIT event, when a Pygame QUIT event is received. This fixes the issue where the app doesn't close when the application window is closed and it then hangs.
+* Searched through code base and corrected spelling of 'primative' to 'primitive.'
+
+* Added a new set of tests in the test subdirectory
+* Added a unittest subdirectory under the test subdirectory for future unit testing
+* Added a docs subdirectory for project documentation
+* Added a demos subdirectory under the docs subdirectory to contain demonstration code and projects.
+
+In file core.py
+* Added rendererBase and renderer3d imports to fix a crash
+
+In file renderers\pygame2D.py
+* Added createFont method and removed old font creation from __init__ method. Now uses a pygame/sdl font object. If unable to load normally, will now use pygame.SysFont instead of Font(none) initially.
+* Modified getTextSize to return the size of the text using pygame/sdl font object.
+* Modified doDrawCommand to use the default font when rendering text.
+* Fixed a problem where title text was not displaying in the main window title bar. Added pygame.display.set_caption(title) in the __init__ method.
+
+In file frame.py
+* Added a new method called centerInDesktop, to the Frame class.
+* The caption bar is now a widget. Several methods added or modified to handle this.
+
+In file themes\win2k.py
+* Added the drawDropDown method for drawing the dropDownBox widget.
+* Moved caption bar drawing from drawFrame to a new method called drawCaptionBar.
+* Modified drawFrame to actually draw a border.
+* Modifed the frameColor to gray.
+* Changed the color used for drawing the checkbox check from white to the defined foreground color since the white was really hard to see.
+* Changed the color used for drawing the background of the selected area in an edit field.
+* Fixed problem where text that was longer than the edit box was drawing over the end of the border.
+* If the edit is read only, it is no longer possible to select text and the caret no longer draws.
+
+In file themes\winxp.py
+* Added a method called drawDropDown to draw the dropDownBox widget.
+
+In widgets\checkbox.py
+* Added the getPreferredSize and getMaximumSize methods.
+* Added a parameter to the constructor to create a checkbox already checked.
+
+In widgets\dropdownbox.py
+* Fixed up the draw function to properly render the drop box and selection list.
+* Modifed the constructor to initialise the widget with a list of items, the item to be selected, and to flag the widget as editable.
+* Added the getPreferredSize and getMaximumSize methods.
+* Adding an item to the DropDownBox no longer sets the selection to that item.
+
+
